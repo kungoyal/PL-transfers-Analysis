@@ -8,7 +8,7 @@ import numpy as np
 
 
 def get_team(team_name):
-    path = r'C:\Users\goyal\Documents\PL transfers'
+    path = "" #fill in local path to folder containing data files
     all_files = glob.glob(os.path.join(path, "*.csv"))
     df_from_each_file = (pd.read_csv(f) for f in all_files)
     concatenated_df = pd.concat(df_from_each_file, ignore_index=True)
