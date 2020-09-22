@@ -65,17 +65,19 @@ def draw_bar(df, team_name, filt):
 
 
 def age_percentage(df):
-    query = """select age, (count(age)*100 / (select count(*) from df)) as "percentage" from df group by age"""
+    query = """select age, (count(age)*100.0 / (select count(*) from df)) as "percentage" from df group by age"""
     age_df = ps.sqldf(query, locals())
     age_df.sort_values(by='percentage', ascending=False, inplace=True)
+    age_df['percentage'] = age_df['percentage'].round(2)
     print(age_df)
 
 
 def pos_percentage(df):
-    query = """select position, (count(position)*100 / (select count(*) from df)) as "percentage" from df group by 
+    query = """select position, (count(position)*100.0 / (select count(*) from df)) as "percentage" from df group by 
     position """
     pos_df = ps.sqldf(query, locals())
     pos_df.sort_values(by='percentage', ascending=False, inplace=True)
+    pos_df['percentage'] = pos_df['percentage'].round(2)
     print(pos_df)
 
 
