@@ -64,9 +64,26 @@ def draw_bar(df, team_name, filt):
         plt.show()
 
 
+def age_percentage(df):
+    query = """select age, (count(age)*100 / (select count(*) from df)) as "percentage" from df group by age"""
+    age_df = ps.sqldf(query, locals())
+    age_df.sort_values(by='percentage', ascending=False, inplace=True)
+    print(age_df)
+
+
+def pos_percentage(df):
+    query = """select position, (count(position)*100 / (select count(*) from df)) as "percentage" from df group by 
+    position """
+    pos_df = ps.sqldf(query, locals())
+    pos_df.sort_values(by='percentage', ascending=False, inplace=True)
+    print(pos_df)
+
+
 if __name__ == '__main__':
-    # team = "Arsenal FC"
-    # data = get_team(team)
-    data = get_all()
+    team = "Arsenal FC"
+    data = get_team(team)
+    # data = get_all()
     cleaned = clean_data(data)
-    draw_bar(cleaned, 'Premier League', 'pos')
+    # draw_bar(cleaned, 'Premier League', 'pos')
+    age_percentage(cleaned)
+    pos_percentage(cleaned)
